@@ -41,26 +41,57 @@ h2 = vl_plotframe(sift_tar_plot);
 set(h2,'color','y','linewidth',3);
 hold on;
 
-%% 'fixed threshold' matching algorithm
-%euclidean distance on feature (descriptor) space below a fixed thresh
+% %% 'fixed threshold' matching algorithm
+% %euclidean distance on feature (descriptor) space below a fixed thresh
+% 
+% fixed_thresh = 69;
+% counter_matches = 0;
+% 
+ for i = 1 : n_det_ref
+       for j = 1 : n_det_tar
+           euclid_dist(i,j) = sqrt(sum((sift_ref_desc(:,i) - sift_tar_desc(:,j)).^2));
+%           if(euclid_dist(i,j) <= fixed_thresh)
+%                 counter_matches = counter_matches + 1; 
+%                 match_pairs_indexes(counter_matches,1) = i; %index of ref
+%                 match_pairs_indexes(counter_matches,2) = j; %index of target                
+%           end
+%           
+      end
+end
+% 
+% for k = 1 : counter_matches
+%     index_ref = match_pairs_indexes(k,1);
+%     index_tar = match_pairs_indexes(k,2);
+%     plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
+% end
+% 
+% saveas(figure1,'match_sift_fixed_thresh.png');
 
-fixed_thresh = 69;
-counter_matches = 0;
+%% 'nearest neighbour' matching algorithm
+%matching with the nearest neighbour in terms of euclidean distance
+
+%counter_matches = 0;
+min_euclid_dist = euclid_dist(1,1); %like fixed threshold
 
 for i = 1 : n_det_ref
       for j = 1 : n_det_tar
-          euclid_dist(i,j) = sqrt(sum((sift_ref_desc(:,i) - sift_tar_desc(:,j)).^2));
-          if(euclid_dist(i,j) <= fixed_thresh)
-                counter_matches = counter_matches + 1; 
-                match_pairs_indexes(counter_matches,1) = i; %index of ref
-                match_pairs_indexes(counter_matches,2) = j; %index of target                
-          end
-          
+          if euclid_dist(i,j) < min_euclid_dist
+                min_euclid_dist = euclid_dist(i,j);
+                match_pairs_indexes(i,1) = i; %index of ref
+                match_pairs_indexes(i,2) = j; %index of target
+          end  
+                   
       end
 end
 
-for k = 1 : counter_matches
-      plot([sift_ref(1,k)  sift_tar_plot(1,k)],[sift_ref(2,k) sift_tar_plot(2,k)],'-b');
+a = nonzeros(match_pairs_indexes(:,1));
+b = nonzeros(match_pairs_indexes(:,2));
+match_pairs_indexes=[a, b];
+
+for k = 1 : size(match_pairs_indexes,1)
+   index_ref = match_pairs_indexes(k,1);
+   index_tar = match_pairs_indexes(k,2);
+   plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
 end
 
-saveas(figure1,'match_fixed_thresh.png');
+saveas(figure1,'match_sift_nearest_neighbour.png');
