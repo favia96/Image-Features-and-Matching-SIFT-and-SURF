@@ -39,12 +39,12 @@ sift_tar_plot = sift_tar;
 sift_tar_plot(1,:) = sift_tar(1,:) + size(target,2); %with the shift
 h2 = vl_plotframe(sift_tar_plot);
 set(h2,'color','y','linewidth',3);
-hold on;
+hold on
 
 %% 'fixed threshold' matching algorithm
 %euclidean distance on feature (descriptor) space below a fixed thresh
 
-fixed_thresh = 69;
+fixed_thresh = 71;
 counter_matches = 0;
 
 for i = 1 : n_det_ref

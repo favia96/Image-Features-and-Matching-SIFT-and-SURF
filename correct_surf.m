@@ -1,4 +1,7 @@
 %% PROJECT 1 -- SURF CORRECTED
+clc
+clear all
+close all
 
 %% reading image and converting to grayscale
 I = imread('data1/obj1_5.jpg'); 
