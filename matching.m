@@ -11,7 +11,7 @@ G2 = rgb2gray(I2); %grayscale tar
 ref = single(G); %the reference image need to be normalized (single format)
 target = single(G2); %the target as well
 
-figure()
+figure1 = figure()
 
 imshow([G, G2]);
 
@@ -62,3 +62,5 @@ end
 for k = 1 : counter_matches
       plot([sift_ref(1,k)  sift_tar_plot(1,k)],[sift_ref(2,k) sift_tar_plot(2,k)],'-b');
 end
+
+saveas(figure1,'match_fixed_thresh.png');
