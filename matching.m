@@ -69,29 +69,16 @@ end
 
 %% 'nearest neighbour' matching algorithm
 %matching with the nearest neighbour in terms of euclidean distance
-
-%counter_matches = 0;
-min_euclid_dist = euclid_dist(1,1); %like fixed threshold
-
 for i = 1 : n_det_ref
-      for j = 1 : n_det_tar
-          if euclid_dist(i,j) < min_euclid_dist
-                min_euclid_dist = euclid_dist(i,j);
-                match_pairs_indexes(i,1) = i; %index of ref
-                match_pairs_indexes(i,2) = j; %index of target
-          end  
-                   
-      end
+    [m,n] = min(euclid_dist(i,:));
+    match_pairs_indexes(i,1) = i; %index of ref
+    match_pairs_indexes(i,2) = n; %index of target
+      
 end
-
-a = nonzeros(match_pairs_indexes(:,1));
-b = nonzeros(match_pairs_indexes(:,2));
-match_pairs_indexes=[a, b];
 
 for k = 1 : size(match_pairs_indexes,1)
    index_ref = match_pairs_indexes(k,1);
    index_tar = match_pairs_indexes(k,2);
    plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
+   
 end
-
-saveas(figure1,'match_sift_nearest_neighbour.png');
