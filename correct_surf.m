@@ -17,7 +17,7 @@ surf_ref = surf_ref.selectStrongest(250); %only 250 (few hundreds) strongest key
 hold on
 plot(surf_ref);
 
-n_det_ref = 250; %number of detected keypoints on reference image
+n_det_ref = surf_ref.Count; %number of detected keypoints on reference image
 
 % %% scaling repeatibility
 % m = 1.2; %scale factor
