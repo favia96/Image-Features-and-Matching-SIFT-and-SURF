@@ -68,17 +68,37 @@ end
 % saveas(figure1,'match_sift_fixed_thresh.png');
 
 %% 'nearest neighbour' matching algorithm
+% %matching with the nearest neighbour in terms of euclidean distance
+% for i = 1 : n_det_ref
+%     [m,n] = min(euclid_dist(i,:));
+%     match_pairs_indexes(i,1) = i; %index of ref
+%     match_pairs_indexes(i,2) = n; %index of target
+%       
+% end
+% 
+% for k = 1 : size(match_pairs_indexes,1)
+%    index_ref = match_pairs_indexes(k,1);
+%    index_tar = match_pairs_indexes(k,2);
+%    plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
+%    
+% end
+
+%% 'nearest neighbour ratio' matching algorithm
 %matching with the nearest neighbour in terms of euclidean distance
 for i = 1 : n_det_ref
-    [m,n] = min(euclid_dist(i,:));
-    match_pairs_indexes(i,1) = i; %index of ref
-    match_pairs_indexes(i,2) = n; %index of target
-      
+    [m,n] = mink(euclid_dist(i,:),2);
+    if(m(1)/m(2))<=0.7
+        match_pairs_indexes(i,1) = i; %index of ref
+        match_pairs_indexes(i,2) = n(2); %index of target
+    end
+%       
 end
 
 for k = 1 : size(match_pairs_indexes,1)
-   index_ref = match_pairs_indexes(k,1);
-   index_tar = match_pairs_indexes(k,2);
-   plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
+        index_ref = match_pairs_indexes(k,1);
+        index_tar = match_pairs_indexes(k,2);
+        if (index_ref~=0)
+            plot([sift_ref(1,index_ref)  sift_tar_plot(1,index_tar)],[sift_ref(2,index_ref) sift_tar_plot(2,index_tar)],'-b');
+        end
    
 end
