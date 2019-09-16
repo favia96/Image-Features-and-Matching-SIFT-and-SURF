@@ -1,14 +1,14 @@
 %% PROJECT 1 -- SIFT CORRECTED
-clc
-clear all
-close all
+%clc
+%clear all
+%close all
 
 %% reading image and converting to sing
 I = imread('data1/obj1_5.jpg'); %reference image
 G = rgb2gray(I); %grayscale
 ref = single(G); %the reference image need to be normalized (single format)
 
-figure()
+figure2=figure()
 imshow(uint8(ref));
 
 %% Applying SIFT
@@ -24,44 +24,50 @@ set(h1,'color','r','linewidth',3);
 
 n_det_ref = size(sift_ref,2); %number of detected keypoints on reference image
 
-%% scaling repeatibility
-m = 1.2; %scale factor
-counter = 0; %numerator of repeatibility (number of matches)
+title('SIFT best 250 keypoints, Peak Thresh=8, Edge Thresh=1.8')
+saveas(figure2,'siftfkeypoints.png');
 
-for i = 1 : 9 %nine scale factors
-    
-      scale(i) = m.^(i-1);
-
-      sift_ref_scaled = scale(i) .* sift_ref(1:2,:); %scale the SIFT keypoints of the ref to predict 
- 
-      target = imresize(ref,m.^(i-1)); %scale the reference image
-      %imshow(uint8(target));     
-      [sift_tar,sift_tar_desc] = vl_sift(target,'PeakThresh',peakthresh,'EdgeThresh',edgethresh);
-      %h2 = vl_plotframe(sift_tar);
-      n_det_tar = size(sift_tar,2); %number of detected keypoints on target
-      %hold on
-      %plot(sift_ref_scaled(1,:),sift_ref_scaled(2,:),'O');
-      
-      for j = 1 : n_det_ref
-         for k = 1 : n_det_tar
-                 if (abs(sift_ref_scaled(1,j) - sift_tar(1,k)) <= 2) && (abs(sift_ref_scaled(2,j) - sift_tar(2,k)) <= 2)
-                     counter = counter + 1; 
-                     break;
-                 end
-         end
-     end 
-      
-     repeatibility_scale(i) = counter ./ n_det_ref; %repeatibility formula
-     counter = 0; %reset counter of matches    
-end
-
-% plot repeatibility over scaling
-figure1 = figure()
-plot(scale,repeatibility_scale,'-*b');
-title('SIFT Repeatibility wrt scales')
-xlabel('Scale') 
-ylabel('Repeatibility(scale)') 
-saveas(figure1,'sift_repeat_scale.png')
+% %% scaling repeatibility
+% m = 1.2; %scale factor
+% counter = 0; %numerator of repeatibility (number of matches)
+% 
+% for i = 1 : 9 %nine scale factors
+%     
+%       scale(i) = m.^(i-1);
+% 
+%       sift_ref_scaled = scale(i) .* sift_ref(1:2,:); %scale the SIFT keypoints of the ref to predict 
+%  
+%       target = imresize(ref,m.^(i-1)); %scale the reference image
+%       %imshow(uint8(target));     
+%       [sift_tar,sift_tar_desc] = vl_sift(target,'PeakThresh',peakthresh,'EdgeThresh',edgethresh);
+%       %h2 = vl_plotframe(sift_tar);
+%       n_det_tar = size(sift_tar,2); %number of detected keypoints on target
+%       %hold on
+%       %plot(sift_ref_scaled(1,:),sift_ref_scaled(2,:),'O');
+%       
+%       for j = 1 : n_det_ref
+%          for k = 1 : n_det_tar
+%                  if (abs(sift_ref_scaled(1,j) - sift_tar(1,k)) <= 2) && (abs(sift_ref_scaled(2,j) - sift_tar(2,k)) <= 2)
+%                      counter = counter + 1; 
+%                      break;
+%                  end
+%          end
+%      end 
+%       
+%      repeatibility_scale(i) = counter ./ n_det_ref; %repeatibility formula
+%      counter = 0; %reset counter of matches    
+% end
+% 
+% % plot repeatibility over scaling
+% figure1 = figure()
+% plot(scale,repeatibility_scale,'-*b');
+% hold on
+% plot(scale, repeatibility_scale_surf,'-Or'); %taken from the other script
+% title('SIFT vs SURF Repeatibility wrt scales')
+% xlabel('Scale') 
+% ylabel('Repeatibility(scale)') 
+% legend('SIFT','SURF')
+% saveas(figure1,'siftvssurf_repeat_scale.png');
 
 
 % %% rotation repeatibility
@@ -113,8 +119,11 @@ saveas(figure1,'sift_repeat_scale.png')
 % 
 % %plot repeatibility over rotation angles
 % figure2 = figure()
-% plot(theta,repeatibility_rotation,'-Or');
-% title('SIFT Repeatibility wrt rotation')
+% plot(theta,repeatibility_rotation,'-*b');
+% hold on;
+% plot(theta,repeatibility_rotation_surf,'-Or'); %taken from surf script
+% title('SIFT vs SURF Repeatibility wrt rotation')
 % xlabel('Theta (deg)') 
 % ylabel('Repeatibility(theta)') 
-% saveas(figure2,'sift_repeat_rotation.png')
+% legend('SIFT','SURF')
+% saveas(figure2,'siftvssurf_repeat_rotation.png')
