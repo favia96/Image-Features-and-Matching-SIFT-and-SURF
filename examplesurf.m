@@ -1,6 +1,5 @@
-
-
-%% PROJECT 1 -- SURF
+%% PROJECT 1 Analysis and Search of Visual Data - SURF Testing
+%% Federico Favia, Mayank Gulati, September 2019
 
 %% reading image and converting 
 I = imread('data1/obj1_5.jpg');
