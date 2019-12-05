@@ -1,4 +1,5 @@
-%% PROJECT 1 -- SIFT
+%% PROJECT 1 Analysis and Search of Visual Data - SIFT Testing
+%% Federico Favia, Mayank Gulati, September 2019
 
 %% reading image and converting to sing
 I = imread('data1/obj1_5.jpg');
