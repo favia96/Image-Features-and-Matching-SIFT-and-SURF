@@ -1,4 +1,6 @@
-%% PROJECT 1 -- SURF CORRECTED
+%% PROJECT 1 Analysis and Search of Visual Data - SURF
+%% Federico Favia, Mayank Gulati, September 2019
+
 clc
 clear all
 close all
