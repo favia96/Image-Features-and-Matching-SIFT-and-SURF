@@ -1,4 +1,7 @@
-%hi mayank% define the x- and y-data for the original line we would like to rotate
+%% PROJECT 1 Analysis and Search of Visual Data - TEST ROTATION MATRIX
+%% Federico Favia, Mayank Gulati, September 2019
+
+%define the x- and y-data for the original line we would like to rotate
 x = 1:10;
 y = 1:10;
 % create a matrix of these points, which will be useful in future calculations
