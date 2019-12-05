@@ -1,4 +1,5 @@
-%% PROJECT 1 -- MATCHING
+%% PROJECT 1 Analysis and Search of Visual Data - MATCHING
+%% Federico Favia, Mayank Gulati, September 2019
 clc
 clear all
 close all
