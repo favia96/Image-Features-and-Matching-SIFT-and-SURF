@@ -1,4 +1,6 @@
-%% PROJECT 1 -- SIFT CORRECTED
+%% PROJECT 1 Analysis and Search of Visual Data - SIFT
+%% Federico Favia, Mayank Gulati, September 2019
+
 %clc
 %clear all
 %close all
